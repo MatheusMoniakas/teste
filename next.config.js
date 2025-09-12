@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Removido output: 'export' para funcionar melhor no Vercel
+  // Configuração otimizada para Vercel
   images: {
     unoptimized: true
-  }
+  },
+  // Garantir que o Vercel use o modo correto
+  trailingSlash: false,
+  // Desabilitar export estático
+  output: undefined
 }
 
 module.exports = nextConfig
