@@ -26,6 +26,12 @@ Este projeto está configurado para deploy automático no Vercel:
    - O projeto será buildado automaticamente
    - Cada push na branch principal fará um novo deploy
 
+### ⚠️ Nota Importante
+Se o deploy travar na instalação de dependências, certifique-se de que:
+- O `package.json` está com versões específicas (não ranges como `^18`)
+- Não há arquivo `vercel.json` (o Vercel detecta automaticamente o Next.js)
+- O `next.config.js` não tem `output: 'export'` (removido para compatibilidade)
+
 ## 🛠️ Desenvolvimento Local
 
 ```bash

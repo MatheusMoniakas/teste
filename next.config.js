@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
+  // Removido output: 'export' para funcionar melhor no Vercel
   images: {
     unoptimized: true
   }
