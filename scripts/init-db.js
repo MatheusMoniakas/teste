@@ -1,9 +1,13 @@
 const { Pool } = require('pg')
-require('dotenv').config({ path: '.env.local' })
+require('dotenv').config()
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  host: 'localhost',
+  port: 5432,
+  database: 'meu_banco',
+  user: 'matheus',
+  password: 'admin123',
+  ssl: false
 })
 
 async function initDatabase() {

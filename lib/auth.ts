@@ -36,6 +36,11 @@ export function verifyToken(token: string): User | null {
 }
 
 export async function createUser(email: string, password: string, name: string): Promise<User | null> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Usuário não pode ser criado.')
+    return null
+  }
+
   const client = await pool.connect()
   
   try {
@@ -56,6 +61,11 @@ export async function createUser(email: string, password: string, name: string):
 }
 
 export async function getUserByEmail(email: string): Promise<(User & { password: string }) | null> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Usuário não encontrado.')
+    return null
+  }
+
   const client = await pool.connect()
   
   try {
@@ -74,6 +84,11 @@ export async function getUserByEmail(email: string): Promise<(User & { password:
 }
 
 export async function getUserById(id: number): Promise<User | null> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Usuário não encontrado.')
+    return null
+  }
+
   const client = await pool.connect()
   
   try {

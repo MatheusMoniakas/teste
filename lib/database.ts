@@ -1,14 +1,39 @@
 import { Pool } from 'pg'
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-})
+// Configuração do pool de conexões
+let pool: Pool | null = null
+
+try {
+  pool = new Pool({
+    host: 'localhost',
+    port: 5432,
+    database: 'meu_banco',
+    user: 'matheus',
+    password: 'admin123',
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  })
+  
+  // Testar conexão
+  pool.on('connect', () => {
+    console.log('✅ Conectado ao PostgreSQL')
+  })
+  
+  pool.on('error', (err) => {
+    console.error('❌ Erro na conexão PostgreSQL:', err)
+  })
+} catch (error) {
+  console.warn('PostgreSQL não configurado. Funcionalidades de banco de dados desabilitadas.')
+}
 
 export default pool
 
 // Função para inicializar o banco de dados
 export async function initDatabase() {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Pule a inicialização do banco.')
+    return
+  }
+
   const client = await pool.connect()
   
   try {

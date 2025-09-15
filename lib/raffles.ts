@@ -10,6 +10,11 @@ export interface Raffle {
 }
 
 export async function createRaffle(userId: number, name: string, items: string[]): Promise<Raffle | null> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Sorteio não pode ser salvo.')
+    return null
+  }
+
   const client = await pool.connect()
   
   try {
@@ -28,6 +33,11 @@ export async function createRaffle(userId: number, name: string, items: string[]
 }
 
 export async function getRafflesByUserId(userId: number): Promise<Raffle[]> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Nenhum sorteio encontrado.')
+    return []
+  }
+
   const client = await pool.connect()
   
   try {

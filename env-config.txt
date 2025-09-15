@@ -1,0 +1,15 @@
+# INSTRUÇÕES PARA CONFIGURAR O BANCO DE DADOS
+# 
+# 1. Crie um arquivo chamado ".env" na raiz do projeto (mesmo nível do package.json)
+# 2. Copie e cole o conteúdo abaixo no arquivo .env:
+
+DATABASE_URL=postgresql://matheus:admin123@localhost:5432/meu_banco
+
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
+
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-key-12345
+
+# 3. Salve o arquivo
+# 4. Execute o comando: npm run init-db
+# 5. Execute o comando: npm run dev
