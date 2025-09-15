@@ -6,9 +6,13 @@ export async function POST(request: NextRequest) {
     console.log('=== REGISTER ROUTE START ===')
     console.log('NODE_ENV:', process.env.NODE_ENV)
     console.log('DATABASE_URL configured:', !!process.env.DATABASE_URL)
+    console.log('Request headers:', Object.fromEntries(request.headers.entries()))
     
-    const { email, password, name } = await request.json()
-    console.log('Request data:', { email, name, hasPassword: !!password })
+    const body = await request.json()
+    console.log('Raw request body:', body)
+    
+    const { email, password, name } = body
+    console.log('Parsed data:', { email, name, hasPassword: !!password })
 
     // Validações básicas
     if (!email || !password || !name) {

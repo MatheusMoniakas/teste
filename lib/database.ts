@@ -11,17 +11,24 @@ try {
   // Configuração para produção (Netlify) ou desenvolvimento
   if (process.env.DATABASE_URL) {
     console.log('Usando DATABASE_URL para conexão...')
+    console.log('DATABASE_URL configurada:', process.env.DATABASE_URL ? 'Sim' : 'Não')
     // Usar string de conexão para produção
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false },
+      max: 1, // Limitar conexões para serverless
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
     })
   } else if (process.env.NODE_ENV === 'production') {
     console.log('Modo produção sem DATABASE_URL - usando Supabase diretamente...')
     // Fallback para Supabase em produção
     pool = new Pool({
       connectionString: 'postgresql://postgres:Matheus10032006@db.apbkobhfnmcqqzqeeqss.supabase.co:5432/postgres',
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false },
+      max: 1,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
     })
   } else {
     console.log('Usando configuração local...')
