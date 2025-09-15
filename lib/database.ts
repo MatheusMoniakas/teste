@@ -14,7 +14,14 @@ try {
     // Usar string de conexão para produção
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+      ssl: { rejectUnauthorized: false }
+    })
+  } else if (process.env.NODE_ENV === 'production') {
+    console.log('Modo produção sem DATABASE_URL - usando Supabase diretamente...')
+    // Fallback para Supabase em produção
+    pool = new Pool({
+      connectionString: 'postgresql://postgres:Matheus10032006@db.apbkobhfnmcqqzqeeqss.supabase.co:5432/postgres',
+      ssl: { rejectUnauthorized: false }
     })
   } else {
     console.log('Usando configuração local...')

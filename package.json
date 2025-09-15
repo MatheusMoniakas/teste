@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "init-db": "node scripts/init-db.js",
+    "init-supabase": "node scripts/init-supabase.js",
     "test-db": "node scripts/test-db.js",
     "test-db-alt": "node scripts/test-db-alternative.js",
+    "test-supabase": "node scripts/test-supabase.js",
     "check-postgres": "node scripts/check-postgres.js"
   },
   "dependencies": {

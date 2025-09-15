@@ -1,0 +1,3 @@
+[33md2d8a9b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix: Melhorar debug e tratamento de erros para registro
+[33m891d884[m fix: Corrigir problemas de deploy no Netlify
+[33mceb6d97[m feat: Configuração completa do PostgreSQL e sistema de autenticação
