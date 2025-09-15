@@ -1,3 +1,0 @@
-[33mf3f943d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix Vercel routes-manifest error - Add proper Next.js config and vercel.json
-[33mfee1cf1[m Fix Vercel deployment configuration - Remove export static, update dependencies versions, remove vercel.json
-[33me105b7c[m Primeiro commit do projeto

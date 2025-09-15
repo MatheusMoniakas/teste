@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configuração padrão para Vercel
+  // Configuração para exportação estática (Netlify)
+  output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true
-  },
-  // Forçar modo de desenvolvimento para Vercel
-  experimental: {
-    appDir: true
   }
 }
 
