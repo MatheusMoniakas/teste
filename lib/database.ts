@@ -4,14 +4,20 @@ import { Pool } from 'pg'
 let pool: Pool | null = null
 
 try {
+  console.log('Inicializando pool de conexão PostgreSQL...')
+  console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'Configurada' : 'Não configurada')
+  console.log('NODE_ENV:', process.env.NODE_ENV)
+  
   // Configuração para produção (Netlify) ou desenvolvimento
   if (process.env.DATABASE_URL) {
+    console.log('Usando DATABASE_URL para conexão...')
     // Usar string de conexão para produção
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
     })
   } else {
+    console.log('Usando configuração local...')
     // Configuração local para desenvolvimento
     pool = new Pool({
       host: 'localhost',
@@ -31,7 +37,10 @@ try {
   pool.on('error', (err) => {
     console.error('❌ Erro na conexão PostgreSQL:', err)
   })
+  
+  console.log('Pool de conexão inicializado com sucesso')
 } catch (error) {
+  console.error('Erro ao inicializar pool PostgreSQL:', error)
   console.warn('PostgreSQL não configurado. Funcionalidades de banco de dados desabilitadas.')
 }
 

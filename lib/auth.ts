@@ -36,24 +36,35 @@ export function verifyToken(token: string): User | null {
 }
 
 export async function createUser(email: string, password: string, name: string): Promise<User | null> {
+  console.log('createUser called with:', { email, name, hasPassword: !!password })
+  
   if (!pool) {
-    console.warn('PostgreSQL não configurado. Usuário não pode ser criado.')
+    console.error('PostgreSQL não configurado. Pool é null.')
     return null
   }
 
+  console.log('Pool configurado, tentando conectar...')
   const client = await pool.connect()
   
   try {
+    console.log('Conectado ao banco, fazendo hash da senha...')
     const hashedPassword = await hashPassword(password)
+    console.log('Senha hasheada, inserindo usuário...')
     
     const result = await client.query(
       'INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING id, email, name',
       [email, hashedPassword, name]
     )
     
+    console.log('Usuário criado com sucesso:', result.rows[0])
     return result.rows[0]
   } catch (error) {
     console.error('Error creating user:', error)
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      code: (error as any)?.code,
+      detail: (error as any)?.detail
+    })
     return null
   } finally {
     client.release()
