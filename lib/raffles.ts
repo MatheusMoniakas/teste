@@ -56,6 +56,11 @@ export async function getRafflesByUserId(userId: number): Promise<Raffle[]> {
 }
 
 export async function getRaffleById(id: number, userId: number): Promise<Raffle | null> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Sorteio não encontrado.')
+    return null
+  }
+
   const client = await pool.connect()
   
   try {
@@ -74,6 +79,11 @@ export async function getRaffleById(id: number, userId: number): Promise<Raffle 
 }
 
 export async function updateRaffle(id: number, userId: number, name: string, items: string[]): Promise<Raffle | null> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Sorteio não pode ser atualizado.')
+    return null
+  }
+
   const client = await pool.connect()
   
   try {
@@ -92,6 +102,11 @@ export async function updateRaffle(id: number, userId: number, name: string, ite
 }
 
 export async function deleteRaffle(id: number, userId: number): Promise<boolean> {
+  if (!pool) {
+    console.warn('PostgreSQL não configurado. Sorteio não pode ser deletado.')
+    return false
+  }
+
   const client = await pool.connect()
   
   try {
@@ -100,7 +115,7 @@ export async function deleteRaffle(id: number, userId: number): Promise<boolean>
       [id, userId]
     )
     
-    return result.rowCount > 0
+    return (result.rowCount || 0) > 0
   } catch (error) {
     console.error('Error deleting raffle:', error)
     return false

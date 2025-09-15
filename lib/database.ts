@@ -4,14 +4,24 @@ import { Pool } from 'pg'
 let pool: Pool | null = null
 
 try {
-  pool = new Pool({
-    host: 'localhost',
-    port: 5432,
-    database: 'meu_banco',
-    user: 'matheus',
-    password: 'admin123',
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-  })
+  // Configuração para produção (Netlify) ou desenvolvimento
+  if (process.env.DATABASE_URL) {
+    // Usar string de conexão para produção
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    })
+  } else {
+    // Configuração local para desenvolvimento
+    pool = new Pool({
+      host: 'localhost',
+      port: 5432,
+      database: 'meu_banco',
+      user: 'matheus',
+      password: 'admin123',
+      ssl: false
+    })
+  }
   
   // Testar conexão
   pool.on('connect', () => {

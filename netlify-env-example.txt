@@ -1,0 +1,15 @@
+# Variáveis de ambiente para configurar no Netlify
+# 
+# Acesse: Site settings > Environment variables
+# Adicione as seguintes variáveis:
+
+DATABASE_URL=postgresql://usuario:senha@host:porta/banco
+JWT_SECRET=sua-chave-secreta-jwt-aqui
+NEXTAUTH_URL=https://seu-site.netlify.app
+NEXTAUTH_SECRET=sua-chave-secreta-nextauth-aqui
+
+# IMPORTANTE: 
+# - Substitua os valores pelos seus dados reais
+# - Para produção, use um banco PostgreSQL hospedado (ex: Supabase, Railway, etc.)
+# - Use senhas seguras e únicas
+# - NEXTAUTH_URL deve ser a URL do seu site no Netlify

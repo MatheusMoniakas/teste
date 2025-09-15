@@ -1,10 +1,15 @@
 [build]
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18"
 
+# Configuração para Next.js no Netlify
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirecionamentos para SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
