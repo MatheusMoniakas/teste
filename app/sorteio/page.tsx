@@ -13,7 +13,7 @@ interface Raffle {
 }
 
 export default function SorteioPage() {
-  const { user, loading } = useAuth()
+  const { user, loading, logout } = useAuth()
   const [items, setItems] = useState<string[]>([])
   const [inputValue, setInputValue] = useState('')
   const [winner, setWinner] = useState<string | null>(null)
@@ -158,27 +158,42 @@ export default function SorteioPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-40 left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="relative max-w-4xl mx-auto py-8 px-4">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            🎲 Sorteio Aleatório
+          <div className="mx-auto h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
+            <span className="text-2xl">🎲</span>
+          </div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2">
+            Sorteio Aleatório
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-lg">
             Adicione itens à lista e sorteie um vencedor!
           </p>
           
           {/* Auth Section */}
-          <div className="mt-4 flex items-center justify-center gap-4">
+          <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
             {user ? (
-              <div className="flex items-center gap-4">
-                <span className="text-gray-700">
+              <div className="flex items-center gap-4 bg-white/80 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
+                <div className="h-8 w-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <span className="text-gray-700 font-medium">
                   Olá, <strong>{user.name}</strong>!
                 </span>
                 <button
-                  onClick={() => {
-                    fetch('/api/auth/logout', { method: 'POST' })
+                  onClick={async () => {
+                    await logout()
                     window.location.reload()
                   }}
                   className="btn-secondary text-sm"
@@ -187,17 +202,17 @@ export default function SorteioPage() {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
                 <Link
-                  href="/login"
-                  className="btn-primary"
+                  href="/"
+                  className="btn-primary text-sm"
                 >
                   Fazer Login
                 </Link>
                 <span className="text-gray-500">ou</span>
                 <Link
-                  href="/register"
-                  className="btn-secondary"
+                  href="/"
+                  className="btn-secondary text-sm"
                 >
                   Registrar
                 </Link>
@@ -205,7 +220,7 @@ export default function SorteioPage() {
             )}
             <Link
               href="/"
-              className="text-primary-600 hover:text-primary-500 text-sm"
+              className="text-purple-600 hover:text-purple-700 text-sm font-medium transition-colors duration-200"
             >
               ← Voltar ao início
             </Link>
@@ -213,7 +228,7 @@ export default function SorteioPage() {
         </div>
 
         {/* Input Section */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-6 border border-white/20">
           <div className="flex gap-3 mb-4">
             <input
               type="text"
@@ -221,7 +236,7 @@ export default function SorteioPage() {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Digite um nome ou número..."
-              className="input-field flex-1"
+              className="input-field flex-1 bg-white/50 border-gray-200 rounded-xl"
               maxLength={50}
             />
             <button
@@ -229,22 +244,22 @@ export default function SorteioPage() {
               disabled={!inputValue.trim() || items.includes(inputValue.trim())}
               className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
             >
-              Adicionar
+              ✨ Adicionar
             </button>
           </div>
           
           {inputValue.trim() && items.includes(inputValue.trim()) && (
-            <p className="text-red-500 text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm">
               Este item já está na lista!
-            </p>
+            </div>
           )}
         </div>
 
         {/* Items List */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-6 border border-white/20">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-800">
-              Lista de Itens ({items.length})
+              📋 Lista de Itens ({items.length})
             </h2>
             <div className="flex gap-2">
               {user && items.length > 0 && (
@@ -260,30 +275,31 @@ export default function SorteioPage() {
                   onClick={clearAll}
                   className="btn-secondary text-sm"
                 >
-                  Limpar Tudo
+                  🗑️ Limpar Tudo
                 </button>
               )}
             </div>
           </div>
 
           {items.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <p className="text-lg mb-2">📝 Lista vazia</p>
+            <div className="text-center py-12 text-gray-500">
+              <div className="text-6xl mb-4">📝</div>
+              <p className="text-xl font-medium mb-2">Lista vazia</p>
               <p>Adicione alguns itens para começar o sorteio!</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {items.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 hover:from-gray-100 hover:to-gray-200 transition-all duration-200 border border-gray-200"
                 >
-                  <span className="text-gray-800 font-medium">{item}</span>
+                  <span className="text-gray-800 font-medium text-lg">{item}</span>
                   <button
                     onClick={() => removeItem(index)}
                     className="btn-danger text-sm"
                   >
-                    Remover
+                    ❌ Remover
                   </button>
                 </div>
               ))}
@@ -292,22 +308,32 @@ export default function SorteioPage() {
         </div>
 
         {/* Draw Section */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-6 border border-white/20">
           <div className="text-center">
             <button
               onClick={drawWinner}
               disabled={items.length === 0 || isDrawing}
-              className="btn-primary text-lg px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary text-xl px-12 py-4 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-200"
             >
-              {isDrawing ? '🎲 Sorteando...' : '🎯 Sortear'}
+              {isDrawing ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
+                  🎲 Sorteando...
+                </div>
+              ) : (
+                '🎯 Sortear Vencedor'
+              )}
             </button>
           </div>
 
           {winner && !isDrawing && (
-            <div className="mt-6 text-center">
-              <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-xl p-6">
-                <h3 className="text-2xl font-bold mb-2">🎉 Vencedor!</h3>
-                <p className="text-3xl font-bold">{winner}</p>
+            <div className="mt-8 text-center">
+              <div className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white rounded-2xl p-8 shadow-2xl transform animate-pulse">
+                <div className="text-6xl mb-4">🎉</div>
+                <h3 className="text-3xl font-bold mb-4">Parabéns!</h3>
+                <p className="text-4xl font-bold bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+                  {winner}
+                </p>
               </div>
             </div>
           )}
@@ -315,30 +341,31 @@ export default function SorteioPage() {
 
         {/* Saved Raffles Section */}
         {user && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-6 border border-white/20">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               📚 Sorteios Salvos
             </h2>
             
             {loadingRaffles ? (
-              <div className="text-center py-4">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mx-auto mb-2"></div>
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
                 <p className="text-gray-500">Carregando sorteios...</p>
               </div>
             ) : savedRaffles.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
-                <p className="text-lg mb-2">📝 Nenhum sorteio salvo</p>
+              <div className="text-center py-12 text-gray-500">
+                <div className="text-6xl mb-4">📚</div>
+                <p className="text-xl font-medium mb-2">Nenhum sorteio salvo</p>
                 <p>Salve seus sorteios para reutilizá-los depois!</p>
               </div>
             ) : (
-              <div className="grid gap-3">
+              <div className="grid gap-4">
                 {savedRaffles.map((raffle) => (
                   <div
                     key={raffle.id}
-                    className="flex items-center justify-between bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition-colors"
+                    className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 hover:from-gray-100 hover:to-gray-200 transition-all duration-200 border border-gray-200"
                   >
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-800">{raffle.name}</h3>
+                      <h3 className="font-semibold text-gray-800 text-lg">{raffle.name}</h3>
                       <p className="text-sm text-gray-500">
                         {raffle.items.length} itens • {new Date(raffle.updated_at).toLocaleDateString('pt-BR')}
                       </p>
@@ -348,13 +375,13 @@ export default function SorteioPage() {
                         onClick={() => loadRaffle(raffle)}
                         className="btn-primary text-sm"
                       >
-                        Carregar
+                        📂 Carregar
                       </button>
                       <button
                         onClick={() => deleteRaffle(raffle.id)}
                         className="btn-danger text-sm"
                       >
-                        Deletar
+                        🗑️ Deletar
                       </button>
                     </div>
                   </div>
@@ -366,12 +393,12 @@ export default function SorteioPage() {
 
         {/* Save Modal */}
         {showSaveModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Salvar Sorteio
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 w-full max-w-md shadow-2xl border border-white/20">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                💾 Salvar Sorteio
               </h3>
-              <div className="mb-4">
+              <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Nome do sorteio
                 </label>
@@ -380,7 +407,7 @@ export default function SorteioPage() {
                   value={saveName}
                   onChange={(e) => setSaveName(e.target.value)}
                   placeholder="Ex: Sorteio da Festa"
-                  className="input-field"
+                  className="input-field bg-white/50 border-gray-200 rounded-xl"
                   maxLength={50}
                 />
               </div>
@@ -390,7 +417,7 @@ export default function SorteioPage() {
                   disabled={!saveName.trim()}
                   className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Salvar
+                  💾 Salvar
                 </button>
                 <button
                   onClick={() => {
@@ -399,7 +426,7 @@ export default function SorteioPage() {
                   }}
                   className="btn-secondary flex-1"
                 >
-                  Cancelar
+                  ❌ Cancelar
                 </button>
               </div>
             </div>
@@ -407,8 +434,11 @@ export default function SorteioPage() {
         )}
 
         {/* Footer */}
-        <div className="text-center text-gray-500 text-sm">
-          <p>Feito com ❤️ para sorteios justos e aleatórios</p>
+        <div className="text-center text-gray-500 text-sm mt-8">
+          <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+            <p className="text-lg">Feito com ❤️ para sorteios justos e aleatórios</p>
+            <p className="text-sm mt-1">🎲 Sorteio Aleatório - 2024</p>
+          </div>
         </div>
       </div>
     </div>
