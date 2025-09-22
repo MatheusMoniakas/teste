@@ -1,0 +1,53 @@
+# 🔧 DATABASE_URL FINAL PARA NETLIFY
+
+## ✅ STRING DE CONEXÃO CORRIGIDA
+
+Use esta string de conexão no Netlify:
+
+```
+DATABASE_URL=postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:5432/postgres
+```
+
+## 🔍 CORREÇÕES FEITAS:
+
+1. **Removido os colchetes** `[Matheus10032006]` → `Matheus10032006`
+2. **Adicionado encoding da senha** `@` → `%40`
+3. **Mantida a porta 5432** (que é a correta para o pooler)
+
+## 📋 COMO CONFIGURAR NO NETLIFY:
+
+1. Acesse seu projeto no Netlify
+2. Vá em **Site settings** → **Environment variables**
+3. Encontre a variável `DATABASE_URL`
+4. Clique em **Edit**
+5. Substitua o valor atual por:
+   ```
+   postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:5432/postgres
+   ```
+6. Clique em **Save**
+7. Faça um **novo deploy**
+
+## 🚀 APÓS A CONFIGURAÇÃO:
+
+1. ✅ A conexão IPv4 será resolvida
+2. ✅ O Netlify conseguirá se conectar ao banco
+3. ✅ Os erros 401/400 devem ser resolvidos
+4. ✅ A criação de usuários funcionará
+
+## 🔑 TODAS AS VARIÁVEIS FINAIS:
+
+```
+DATABASE_URL=postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:5432/postgres
+JWT_SECRET=oWuGTMV/hjtOAtvHrFLagygX4xL1UMXIeQ+0am5lqOOmdYFT7u1/derhPO4KPnIV4T0a1vDX2U7aTlT4+0d0Kg==
+NEXTAUTH_URL=https://seu-site.netlify.app
+NEXTAUTH_SECRET=super-secret-nextauth-key-2024-matheus-app-very-long-and-secure-67890
+NODE_ENV=production
+SUPABASE_URL=https://qrzzttxxerugiwkqwhvg.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyenp0dHh4ZXJ1Z2l3a3F3aHZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NDkyOTMsImV4cCI6MjA3MzUyNTI5M30.JvkwFcmG4vI9aQdmvtZgpDwSQiKFP4aYqQWJBIlEzsw
+```
+
+## ⚠️ LEMBRE-SE:
+
+- Substitua `seu-site.netlify.app` pela URL real do seu site
+- Faça um novo deploy após alterar as variáveis
+- Teste a criação de usuário após o deploy

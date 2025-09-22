@@ -4,8 +4,8 @@ require('dotenv').config()
 async function testSupabaseConnection() {
   console.log('🔍 Testando conexão com Supabase...')
   
-  // Usar a connection string do Supabase
-  const connectionString = 'postgresql://postgres:Matheus10032006@db.apbkobhfnmcqqzqeeqss.supabase.co:5432/postgres'
+  // Usar a connection string do Supabase (Transaction pooler - recomendado para Netlify)
+  const connectionString = 'postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres'
   
   console.log('📋 Connection string:', connectionString.replace(/:[^:@]*@/, ':***@'))
   

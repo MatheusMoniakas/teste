@@ -24,7 +24,7 @@ try {
     console.log('Modo produção sem DATABASE_URL - usando Supabase diretamente...')
     // Fallback para Supabase em produção
     pool = new Pool({
-      connectionString: 'postgresql://postgres:Matheus10032006@db.apbkobhfnmcqqzqeeqss.supabase.co:5432/postgres',
+      connectionString: 'postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres',
       ssl: { rejectUnauthorized: false },
       max: 1,
       idleTimeoutMillis: 30000,

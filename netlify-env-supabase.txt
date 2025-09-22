@@ -1,0 +1,15 @@
+# Variáveis de ambiente para configurar no Netlify com Supabase
+# 
+# Acesse: Site settings > Environment variables
+# Adicione as seguintes variáveis:
+
+DATABASE_URL=postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+JWT_SECRET=sua-chave-secreta-jwt-muito-longa-e-segura-12345
+NEXTAUTH_URL=https://seu-site.netlify.app
+NEXTAUTH_SECRET=sua-chave-secreta-nextauth-muito-longa-e-segura-12345
+
+# IMPORTANTE: 
+# - Substitua "seu-site.netlify.app" pela URL real do seu site no Netlify
+# - Use senhas seguras e únicas para JWT_SECRET e NEXTAUTH_SECRET
+# - A DATABASE_URL já está configurada com suas credenciais do Supabase
+# - Para produção, considere usar senhas mais seguras

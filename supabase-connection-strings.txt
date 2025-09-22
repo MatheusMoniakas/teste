@@ -1,0 +1,37 @@
+# 🔗 Connection Strings do Supabase - Projeto: qrzzttxxerugiwkqwhvg
+
+## 📋 Opções Disponíveis:
+
+### 1️⃣ **Transaction Pooler (RECOMENDADO para Netlify)**
+```
+postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+```
+- ✅ Melhor para aplicações serverless
+- ✅ Otimizado para Netlify Functions
+- ✅ Porta: 6543
+
+### 2️⃣ **Direct Connection**
+```
+postgresql://postgres:Matheus10032006%40@db.qrzzttxxerugiwkqwhvg.supabase.co:5432/postgres
+```
+- ⚠️ Pode ter limitações em serverless
+- ✅ Conexão direta ao banco
+- ✅ Porta: 5432
+
+### 3️⃣ **Session Pooler**
+```
+postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:5432/postgres
+```
+- ✅ Boa para aplicações com sessões longas
+- ✅ Porta: 5432
+
+## 🎯 **Para o Netlify, use a Transaction Pooler:**
+```
+DATABASE_URL=postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+```
+
+## ⚠️ **Importante:**
+- A senha `Matheus10032006@` está codificada como `Matheus10032006%40`
+- O `%40` representa o símbolo `@` na URL
+- Use sempre a Transaction Pooler para aplicações serverless
+

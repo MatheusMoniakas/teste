@@ -3,66 +3,52 @@ import pool from '@/lib/database'
 
 export async function GET(request: NextRequest) {
   try {
-    console.log('=== TEST DB ROUTE START ===')
-    console.log('NODE_ENV:', process.env.NODE_ENV)
-    console.log('DATABASE_URL configured:', !!process.env.DATABASE_URL)
+    console.log('=== TESTE DE CONEXÃO COM BANCO ===')
     
     if (!pool) {
-      console.error('Pool is null')
-      return NextResponse.json(
-        { error: 'Database pool not initialized', pool: null },
-        { status: 500 }
-      )
+      console.log('Pool não configurado')
+      return NextResponse.json({
+        error: 'Pool de conexão não configurado',
+        pool: null
+      }, { status: 500 })
     }
-
-    console.log('Pool exists, testing connection...')
+    
+    console.log('Pool configurado, testando conexão...')
+    
     const client = await pool.connect()
     
     try {
-      // Testar query simples
-      const result = await client.query('SELECT NOW() as current_time, version() as version')
-      console.log('Query successful:', result.rows[0])
+      // Testar conexão básica
+      const result = await client.query('SELECT NOW() as current_time')
+      console.log('Conexão bem-sucedida:', result.rows[0])
       
-      // Verificar tabelas
+      // Verificar se as tabelas existem
       const tablesResult = await client.query(`
         SELECT table_name 
         FROM information_schema.tables 
-        WHERE table_schema = 'public'
+        WHERE table_schema = 'public' 
+        AND table_name IN ('users', 'raffles')
       `)
       
-      console.log('Tables found:', tablesResult.rows)
+      console.log('Tabelas encontradas:', tablesResult.rows)
       
       return NextResponse.json({
-        success: true,
-        message: 'Database connection successful',
-        data: {
-          current_time: result.rows[0].current_time,
-          version: result.rows[0].version,
-          tables: tablesResult.rows.map(row => row.table_name)
-        }
-      })
+        message: 'Conexão com banco bem-sucedida',
+        currentTime: result.rows[0].current_time,
+        tables: tablesResult.rows,
+        poolConfigured: true
+      }, { status: 200 })
       
     } finally {
       client.release()
     }
     
   } catch (error) {
-    console.error('=== TEST DB ROUTE ERROR ===')
-    console.error('Error:', error)
-    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error')
-    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
-    
-    return NextResponse.json(
-      { 
-        error: 'Database connection failed',
-        message: error instanceof Error ? error.message : 'Unknown error',
-        details: {
-          NODE_ENV: process.env.NODE_ENV,
-          DATABASE_URL_configured: !!process.env.DATABASE_URL,
-          pool_exists: !!pool
-        }
-      },
-      { status: 500 }
-    )
+    console.error('Erro na conexão com banco:', error)
+    return NextResponse.json({
+      error: 'Erro na conexão com banco',
+      details: error instanceof Error ? error.message : 'Unknown error',
+      poolConfigured: !!pool
+    }, { status: 500 })
   }
 }

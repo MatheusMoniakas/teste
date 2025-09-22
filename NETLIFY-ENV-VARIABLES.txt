@@ -1,0 +1,62 @@
+# 🔧 VARIÁVEIS DE AMBIENTE PARA O NETLIFY
+# 
+# 📋 INSTRUÇÕES:
+# 1. Acesse seu projeto no Netlify
+# 2. Vá em: Site settings → Environment variables
+# 3. Adicione cada variável abaixo
+# 4. ⚠️ IMPORTANTE: Substitua "seu-site" pela URL real do seu site
+
+# ========================================
+# ✅ VARIÁVEIS OBRIGATÓRIAS
+# ========================================
+
+# 1️⃣ BANCO DE DADOS (Supabase)
+DATABASE_URL=postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+
+# 2️⃣ AUTENTICAÇÃO JWT
+JWT_SECRET=super-secret-jwt-key-2024-matheus-app-very-long-and-secure-12345
+
+# 3️⃣ URL DO SITE (SUBSTITUA "seu-site" pela URL real)
+NEXTAUTH_URL=https://seu-site.netlify.app
+
+# 4️⃣ SEGREDO NEXTAUTH
+NEXTAUTH_SECRET=super-secret-nextauth-key-2024-matheus-app-very-long-and-secure-67890
+
+# ========================================
+# ⚠️ VARIÁVEIS RECOMENDADAS
+# ========================================
+
+# 5️⃣ AMBIENTE
+NODE_ENV=production
+
+# 6️⃣ URL DO SUPABASE
+SUPABASE_URL=https://qrzzttxxerugiwkqwhvg.supabase.co
+
+# 7️⃣ CHAVE PÚBLICA DO SUPABASE
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyenp0dHh4ZXJ1Z2l3a3F3aHZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NDkyOTMsImV4cCI6MjA3MzUyNTI5M30.JvkwFcmG4vI9aQdmvtZgpDwSQiKFP4aYqQWJBIlEzsw
+
+# ========================================
+# 📝 NOTAS IMPORTANTES:
+# ========================================
+# 
+# 🔐 SEGURANÇA:
+# - JWT_SECRET e NEXTAUTH_SECRET devem ser únicos e longos
+# - Nunca compartilhe essas chaves
+# - Use chaves diferentes para cada variável
+# 
+# 🌐 URL DO SITE:
+# - Substitua "seu-site" pela URL real do seu site no Netlify
+# - Exemplo: https://meu-app-sorteio.netlify.app
+# 
+# 🗄️ BANCO DE DADOS:
+# - A DATABASE_URL já está configurada com suas credenciais
+# - A senha está codificada (%40 = @)
+# 
+# 🚀 DEPLOY:
+# - Após adicionar as variáveis, faça um novo deploy
+# - Teste a funcionalidade de criar conta
+# 
+# ✅ TESTE:
+# - A conexão com o banco já foi testada e está funcionando
+# - As tabelas 'users' e 'raffles' já existem
+

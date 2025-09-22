@@ -1,0 +1,50 @@
+# 🔧 DATABASE_URL CORRIGIDA PARA NETLIFY
+
+## ❌ PROBLEMA IDENTIFICADO
+A conexão direta do Supabase não é compatível com IPv4 (usado pelo Netlify).
+
+## ✅ SOLUÇÃO: USAR SESSION POOLER
+
+### 1. Acesse o Supabase Dashboard
+- Vá em Settings → Database
+- Clique na aba "Connection pooling"
+
+### 2. Use a String de Conexão do Pooler
+Substitua a DATABASE_URL atual por esta:
+
+```
+DATABASE_URL=postgresql://postgres.qrzzttxxerugiwkqwhvg:Matheus10032006%40@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+```
+
+### 3. Configurar no Netlify
+1. Acesse seu projeto no Netlify
+2. Vá em Site settings → Environment variables
+3. Edite a variável `DATABASE_URL`
+4. Substitua pelo valor acima
+5. Faça um novo deploy
+
+## 🔍 DIFERENÇA ENTRE AS CONEXÕES
+
+### Conexão Direta (❌ Não funciona no Netlify)
+```
+postgresql://postgres:senha@db.qrzzttxxerugiwkqwhvg.supabase.co:5432/postgres
+```
+
+### Session Pooler (✅ Funciona no Netlify)
+```
+postgresql://postgres:senha@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+```
+
+## 📝 NOTAS IMPORTANTES
+
+- O pooler usa a porta **6543** em vez de **5432**
+- O host é **aws-1-sa-east-1.pooler.supabase.com**
+- Isso resolve o problema de compatibilidade IPv4
+- O pooler é otimizado para aplicações serverless como Netlify
+
+## 🚀 APÓS A CORREÇÃO
+
+1. ✅ Configure a nova DATABASE_URL no Netlify
+2. ✅ Faça um novo deploy
+3. ✅ Teste a criação de usuário
+4. ✅ Verifique se os erros 401/400 foram resolvidos
