@@ -436,8 +436,8 @@ export default function SorteioPage() {
         {/* Footer */}
         <div className="text-center text-gray-500 text-sm mt-8">
           <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-            <p className="text-lg">Feito com ❤️ para sorteios justos e aleatórios</p>
-            <p className="text-sm mt-1">🎲 Sorteio Aleatório - 2024</p>
+            <p className="text-lg">Feito para sorteios justos e aleatórios</p>
+            <p className="text-sm mt-1">🎲 Sorteio Aleatório - 2025</p>
           </div>
         </div>
       </div>
